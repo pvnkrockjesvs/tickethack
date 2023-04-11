@@ -1,12 +1,25 @@
 body {
+    font-family : Arial; 
+    margin: 0;
+}
+#NavBar {
+    margin: 5px 20px;
+}
+#navlink { 
+    float: right;
+    margin-top: -35px;
+}
+#navlink a { color: black; padding:0 30px;  }
+h1 { width: 200px; font-size: 20px;}
+h1 a { color: #4FAA92!important; }
+h1 a, #navlink a { text-decoration: none; }
+#container {
+    padding-top: 30px;
     height : 100vh;
     width : 100 vw;
     background-image: url("images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    font-family : Arial; 
-}
-#container {
 }
 #header {
     text-align: center;
@@ -28,7 +41,7 @@ body {
     border-bottom: 1px solid #4FAA92;
     padding-bottom: 40px;;
 }
-#search {
+#containerSearch {
     display: flex;
     flex-direction: column;
 }
@@ -51,3 +64,22 @@ input {
 #departure {
     border-bottom: 1px solid #ccc;
 }
+.colorvert {
+    color: #4FAA92;
+}
+
+/* Page CART */
+#containerCart, #containerBooking {
+    height: 100vh;
+    width: 100vw;
+    background-color: #eee;
+    display: grid;
+}
+#resultCart, #resultBooking {
+    background-color: white; text-align: center;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+/* Page BOOKINGS */
