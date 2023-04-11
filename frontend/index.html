@@ -4,6 +4,7 @@
 <head>
 	<title>Hackathon - Tickethack</title>
 	<link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/datepicker.min.css">
 </head>
 
 <body>
@@ -13,11 +14,22 @@
             <h1>Explore the word effortlessly by train!</h1>
             <p>Compare, book and enjoy cheap prices for train tickets your journey starts on Tickethack</p>
         </div>
-        <div id="search"></div>
-        <div id="result"></div>
+        <div id="recherche">
+            <div id="search" class="fondBlock">
+                <input type="text" placeholder="Departure" id="departure" />
+                <input type="text" placeholder="Arrival" id="arrival" /><br/>
+                <input type="date" placeholder="Date" id="date" />
+                <button id="buttonSearch">Search</button>
+            </div>
+            <div id="result" class="fondBlock">
+                <p id="ligneverte"><img src="images/train.png" alt="Search" height="200"></p>
+                <p>It's time to book your future trip</p>
+            </div>
+        </div>
 	</div>
 
 	<script src='script.js'></script>
+    <script src="assets/datepicker.min.js"></script>
 </body>
 
 </html>

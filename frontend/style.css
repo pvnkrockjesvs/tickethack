@@ -2,9 +2,52 @@ body {
     height : 100vh;
     width : 100 vw;
     background-image: url("images/background.jpg");
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+    font-family : Arial; 
 }
 #container {
-   
+}
+#header {
+    text-align: center;
+    color: white;
+}
+.fondBlock {
+    background-color: white;
+    border-radius: 5%;
+    width: 300px;
+    padding: 40px;
+    text-align: center;
+}
+#recherche {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 60px;
+}
+#ligneverte {
+    border-bottom: 1px solid #4FAA92;
+    padding-bottom: 40px;;
+}
+#search {
+    display: flex;
+    flex-direction: column;
+}
+#buttonSearch, input {
+    width:90%;
+    padding: 5%;
+    border: none;
+    border-radius: 5px;
+}
+
+#buttonSearch {
+    width:100%;
+    background-color: #4FAA92;
+    color: white;
+    margin-top: 50px;
+}
+input {
+    background-color: #eee;
+}
+#departure {
+    border-bottom: 1px solid #ccc;
 }
