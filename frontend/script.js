@@ -17,7 +17,8 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
         .then(response => response.json())
         .then(
             data => {
-                let result = ''
+                let result = '' 
+                /*********** A SUPP  ***************/
                 data = [{
                     "_id": "64351c6787c4d8dbf2e85299",
                     "departure": "Paris",
@@ -36,7 +37,8 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
                     "arrival": "Marseille",
                     "date": "2023-04-15T09:30:33.263Z",
                     "price": 90
-                } ]
+                } ] 
+                /*********** */
                 if(data) {
                     for(let i = 0; i<data.length; i++) {
                         let newDate = new Date(data[i].date)
@@ -49,7 +51,7 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
                             <div id="listePrice"><strong>${data[i].price}€</strong></div>
                             <div id="listeChoix">
                                 <button class="buttonGreen bookSearch" data-index="${i}">Book</button>
-                                <input type="hidden" value="${data[i].id}">
+                                <input type="hidden" value="${data[i]._id}">
                             </div>
                         </div>`
                     }
@@ -79,12 +81,18 @@ function bookSearch() {
             function () {
                 const idBook = this.nextElementSibling.value
                 //POST trips/tickets/id
-                fetch('http://localhost:3000/trips/tickets/'+idBook)
+                fetch('http://localhost:3000/tickets/'+idBook, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    // body: JSON.stringify(idBook)
+                })
                 .then(response => response.json())
                 .then(
                     data => {
-                        // redirect vers panier
-                        window.location.assign("cart.html")
+                        if(data) {
+                            // redirect vers panier
+                            window.location.assign("cart.html")
+                        } else {}
                     }
                 )
             }
@@ -93,6 +101,59 @@ function bookSearch() {
 }
       
     
+/* *********** AFFICHER PANIER ************** */
+
+fetch('http://localhost:3000/tickets/cart')
+.then(response => response.json())
+.then(
+    data => {
+        console.log("Boo")
+        let listeData = data
+        /*********** A SUPP  ***************/
+        listeData = { tick: [{
+                "_id": "64351c6787c4d8dbf2e85299",
+                "departure": "Paris",
+                "arrival": "Marseille",
+                "date": "2023-04-15T06:28:33.263Z",
+                "price": 200
+            },{
+                "_id": "64351c6787c4d8dbf2e85292",
+                "departure": "Paris",
+                "arrival": "Marseille",
+                "date": "2023-04-15T06:50:33.263Z",
+                "price": 100
+            },{
+                "_id": "64351c6787c4d8dbf2e85292",
+                "departure": "Paris",
+                "arrival": "Marseille",
+                "date": "2023-04-15T09:30:33.263Z",
+                "price": 50
+            } ],
+            result: true, total: 350
+        }
+        /************** */
+        if(listeData.result) {
+            let listeAffiche=''
+            for(let i = 0; i<listeData.length; i++) {
+                listeAffiche += `
+                <div class="listeSearch">
+                    <div id="listeDepArriv">${listeData[i].departure} &rsaquo; ${listeData[i].arrival}</div>
+                    <div id="listeHeure">${heure}:${minutes}</div>
+                    <div id="listePrice"><strong>${listeData[i].price}€</strong></div>
+                    <div id="listeChoix">
+                        <button class="buttonGreen bookSearch" data-index="${i}">X</button>
+                        <input type="hidden" value="${listeData[i]._id}">
+                    </div>
+                </div>`
+            }
+            document.querySelector("#resultCart").innerHTML = listeAffiche
+        } else {
+            document.querySelector("#resultCart").innerHTML = `
+            <p>No tickets in your cart.</p>
+            <p>Why not plain a trip?</p>`
+        }
+    }
+)
 
 
 /* ******* BOOKING = billets ACHETES ****** */

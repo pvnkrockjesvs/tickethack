@@ -78,8 +78,7 @@ input {
     justify-content: space-around;
     align-items: center;
 }
-#resultSearch {
-}
+
 #blockSearch {
     overflow: scroll;
     max-height: 300px;
