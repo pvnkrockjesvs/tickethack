@@ -79,28 +79,26 @@ function deletePanier() {
     }
 }
 
-function purchasePanier() { // ok
+function purchasePanier() { // OK
     /* ******* Valide Panier ****** */
     document.querySelector('#purchase').addEventListener('click', function() {
         const tousLesTrips = document.querySelectorAll('.listeSearch')
         // console.log("Purchase : "+tousLesTrips.length)
-        /*let idsCart = []
         for(let i =0; i < tousLesTrips.length; i++) {
-            idsCart.push(document.querySelector('id'+i))            
-        } */
-        // console.log(idCart)
-        // change le statut en acheté isPayed
-        fetch('http://localhost:3000/tickets/cart/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            //body: JSON.stringify(idsCart)
-        })
-        .then(response => response.json())
-        .then(
-            data => { 
-                // redirect vers Bookings
-                window.location.assign("bookings.html")
-            }
-        )
+            let idCart = document.querySelector('id'+i)
+            // console.log(idCart)
+            // change le statut en acheté isPayed
+            fetch('http://localhost:3000/tickets/cart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            })
+            .then(response => response.json())
+            .then(
+                data => { 
+                    console.log(data.tick)
+                    window.location.assign("bookings.html")
+                  }
+            )
+        }
     })
 }
