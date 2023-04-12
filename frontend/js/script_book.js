@@ -14,7 +14,7 @@ if (books.result === false) {
             listeAffiche += `
             <div class="listeSearch">
                 <div id="listeDepArriv">${ticket.departure} &rsaquo; ${ticket.arrival}</div>
-                <div id="listeHeure">${date.getHours()}h${date.getMinutes()}</div>
+                <div id="listeHeure">${dateAvantDix(date.getHours())}h${dateAvantDix(date.getMinutes())}</div>
                 <div id="listePrice">${ticket.price}€</div>
                 <div id="listeDep"><strong>Departure in ${diff}</strong></div>
             </div>
