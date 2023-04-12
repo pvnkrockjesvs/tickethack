@@ -17,7 +17,7 @@ h1 a, #navlink a { text-decoration: none; }
     padding-top: 30px;
     height : 100vh;
     width : 100 vw;
-    background-image: url("images/background.jpg");
+    background-image: url("../images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -77,6 +77,8 @@ input {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 #blockSearch {
@@ -97,6 +99,21 @@ input {
     text-align: center;
     width: 50%;
     margin: auto;
+    padding: 40px;
+    border-radius: 5px;
+}
+#totalCart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0b407a;
+    color: white;
+    padding: 20px;
+    margin :  40px -40px -40px -40px;
+    border-radius: 0 0 5px 5px;
 }
 
+button:hover {
+    cursor: pointer;
+}
 /* Page BOOKINGS */
