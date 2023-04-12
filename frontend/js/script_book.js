@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/tickets/booked').then(response => response.json()).then(books => {
+fetch('https://tickethack-backend-chi.vercel.app/tickets/booked').then(response => response.json()).then(books => {
 if (books.result === false) {
         document.querySelector('#resultBooking').innerHTML += `            
         <p>No booking yet.</p>

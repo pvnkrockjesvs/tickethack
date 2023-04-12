@@ -95,7 +95,7 @@ function purchasePanier() { // OK
             let idCart = document.querySelector('id'+i)
             // console.log(idCart)
             // change le statut en acheté isPayed
-            fetch('http://localhost:3000/tickets/cart', {
+            fetch('https://tickethack-backend-chi.vercel.app/tickets/cart', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
             })
