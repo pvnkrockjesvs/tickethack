@@ -1,4 +1,4 @@
-    
+
 /* *********** AFFICHER PANIER ************** */
 
 fetch('http://localhost:3000/tickets/cart')
@@ -16,8 +16,9 @@ fetch('http://localhost:3000/tickets/cart')
             if(listeTick.length > 0)  {
                 for(let i = 0; i < listeTick.length; i++) {
                     let newDate = new Date(listeTick[i].trip[0].date)
-                    let heure = newDate.getHours()
-                    let minutes = newDate.getMinutes()
+                    let heure = dateAvantDix(newDate.getHours())
+                    let minutes = dateAvantDix(newDate.getMinutes())
+                    
                     listeAffiche += `
                     <div class="listeSearch">
                         <div id="listeDepArriv">${listeTick[i].trip[0].departure} &rsaquo; ${listeTick[i].trip[0].arrival}</div>

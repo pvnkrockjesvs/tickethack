@@ -1,3 +1,5 @@
+const { dateAvantDix } = require('../js/function_common');
+
 /* ******** RECHERCHE *********/
 
 document.querySelector("#buttonSearch").addEventListener('click', function(){
@@ -8,43 +10,21 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
     if(departure != "" && arrival != "" && date != "") {
 
         const NvlDateEn = new Date(date)
-        let newMonth = NvlDateEn.getMonth()+1
-        let newDay = NvlDateEn.getDate()
-        if(newMonth < 10) { newMonth = "0"+newMonth } 
-        if(newDay < 10) { newDay = "0"+newDay } 
+        let newMonth = dateAvantDix(NvlDateEn.getMonth()+1)
+        let newDay = dateAvantDix(NvlDateEn.getDate())
         const dateEn = NvlDateEn.getFullYear()+'-'+newMonth+'-'+newDay
         fetch('http://localhost:3000/trips/'+departure+"&"+arrival+"&"+dateEn)
         .then(response => response.json())
         .then(
             data => {
                 let result = '' 
-                /*********** A SUPP  ***************/ /*
-                data = [{
-                    "_id": "64351c6787c4d8dbf2e85299",
-                    "departure": "Paris",
-                    "arrival": "Marseille",
-                    "date": "2023-04-15T06:28:33.263Z",
-                    "price": 113
-                },{
-                    "_id": "64351c6787c4d8dbf2e85292",
-                    "departure": "Paris",
-                    "arrival": "Marseille",
-                    "date": "2023-04-15T06:50:33.263Z",
-                    "price": 90
-                },{
-                    "_id": "64351c6787c4d8dbf2e85292",
-                    "departure": "Paris",
-                    "arrival": "Marseille",
-                    "date": "2023-04-15T09:30:33.263Z",
-                    "price": 90
-                } ] */
-                /*********** */
+                
                 if(data && data.length >0) {
                     result += `<div id="blockSearch">`
                         for(let i = 0; i < data.length; i++) {
                             let newDate = new Date(data[i].date)
-                            let heure = newDate.getHours()
-                            let minutes = newDate.getMinutes()
+                            let heure = dateAvantDix(newDate.getHours())
+                            let minutes = dateAvantDix(newDate.getMinutes())
                             result += `
                             <div class="listeSearch">
                                 <div id="listeDepArriv">${data[i].departure} &rsaquo; ${data[i].arrival}</div>
