@@ -7,7 +7,7 @@ function msgPanierVide() {
 /* *********** AFFICHER PANIER ************** */
 
 function affichePanier() {
-    fetch('http://localhost:3000/tickets/cart')
+    fetch('https://tickethack-backend-chi.vercel.app/tickets/cart')
     .then(response => response.json())
     .then(
         data => { // OK
@@ -23,16 +23,18 @@ function affichePanier() {
                         let heure = dateAvantDix(newDate.getHours())
                         let minutes = dateAvantDix(newDate.getMinutes())
                         
-                        listeAffiche += `
-                        <div class="listeSearch">
-                            <div id="listeDepArriv">${listeTick[i].trip[0].departure} &rsaquo; ${listeTick[i].trip[0].arrival}</div>
-                            <div id="listeHeure">${heure}:${minutes}</div>
-                            <div id="listePrice"><strong>${listeTick[i].trip[0].price}€</strong></div>
-                            <div id="listeChoix">
-                                <button class="buttonGreen cartDelete" data-index="${i}">X</button>
-                                <input type="hidden" id="id${i}" value="${listeTick[i]._id}">
-                            </div>
-                        </div>`
+                        if(newDate > new Date()) { // ne prends pas les trajets précédents (jour et heure > aujourd'hui)
+                            listeAffiche += `
+                            <div class="listeSearch">
+                                <div id="listeDepArriv">${listeTick[i].trip[0].departure} &rsaquo; ${listeTick[i].trip[0].arrival}</div>
+                                <div id="listeHeure">${heure}:${minutes}</div>
+                                <div id="listePrice"><strong>${listeTick[i].trip[0].price}€</strong></div>
+                                <div id="listeChoix">
+                                    <button class="buttonGreen cartDelete" data-index="${i}">X</button>
+                                    <input type="hidden" id="id${i}" value="${listeTick[i]._id}">
+                                </div>
+                            </div>`
+                        } else {}
                     }
                     listeAffiche += `<div id="totalCart"><div>Total: ${listeData.total}€</div>
                     <div><button id="purchase" class="buttonGreen">Purchase</button></div></div>`
@@ -63,7 +65,7 @@ function deletePanier() {
                 
                 const idCart = this.nextElementSibling.value
                 console.log(idCart)
-                fetch('http://localhost:3000/tickets/cart/'+idCart, {
+                fetch('https://tickethack-backend-chi.vercel.app/tickets/cart/'+idCart, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     //body: JSON.stringify(idCart)
@@ -88,7 +90,7 @@ function purchasePanier() { // OK
             let idCart = document.querySelector('id'+i)
             // console.log(idCart)
             // change le statut en acheté isPayed
-            fetch('http://localhost:3000/tickets/cart', {
+            fetch('https://tickethack-backend-chi.vercel.app/tickets/cart', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
             })

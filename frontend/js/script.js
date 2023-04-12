@@ -17,7 +17,7 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
         const dateEn = NvlDateEn.getFullYear()+'-'+newMonth+'-'+newDay
         
         if(NvlDateEn > new Date()) { // ne prends pas les trajets précédents (jour et heure > aujourd'hui)
-            fetch('http://localhost:3000/trips/'+departure+"&"+arrival+"&"+dateEn)
+            fetch('https://tickethack-backend-chi.vercel.app/trips/'+departure+"&"+arrival+"&"+dateEn)
             .then(response => response.json())
             .then(
                 data => {
@@ -69,7 +69,7 @@ function bookSearch() {
             function () {
                 const idBook = this.nextElementSibling.value
                 //POST trips/tickets/id
-                fetch('http://localhost:3000/tickets/'+idBook, {
+                fetch('https://tickethack-backend-chi.vercel.app/tickets/'+idBook, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     // body: JSON.stringify(idBook)
