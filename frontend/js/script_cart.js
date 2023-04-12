@@ -82,24 +82,22 @@ function purchasePanier() { //
     document.querySelector('#purchase').addEventListener('click', function() {
         const tousLesTrips = document.querySelectorAll('.listeSearch')
         // console.log("Purchase : "+tousLesTrips.length)
-        let idsCart = []
+        /*let idsCart = []
         for(let i =0; i < tousLesTrips.length; i++) {
             idsCart.push(document.querySelector('id'+i))            
-        }
+        } */
         // console.log(idCart)
         // change le statut en acheté isPayed
         fetch('http://localhost:3000/tickets/cart/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(idsCart)
+            //body: JSON.stringify(idsCart)
         })
         .then(response => response.json())
         .then(
             data => { 
-                if(i === tousLesTrips.length - 1) {
-                    // redirect vers Bookings
-                    window.location.assign("bookings.html")
-                } else {}
+                // redirect vers Bookings
+                window.location.assign("bookings.html")
             }
         )
     })
