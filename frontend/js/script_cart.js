@@ -97,10 +97,6 @@ function purchasePanier() { // OK
                     window.location.assign("bookings.html")
                   }
             )
-            if(i === tousLesTrips.length - 1) {
-                // redirect vers Bookings
-                
-            } else {}
         }
     })
 }
