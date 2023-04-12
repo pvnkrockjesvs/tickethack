@@ -3,8 +3,8 @@ if (books.result === false) {
         document.querySelector('#resultBooking').innerHTML += `            
         <p>No booking yet.</p>
         <p>Why not plain a trip?</p>`
-    } else {    
-
+} else {    
+        
         let listeAffiche = "<p>My bookings</p>"
         for (let i in books.booked) {
             let ticket = books.booked[i].trip[0]

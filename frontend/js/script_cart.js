@@ -12,7 +12,7 @@ fetch('http://localhost:3000/tickets/cart')
         if(listeData.result) {
             let listeTick = listeData.tick
             let listeAffiche = "<p>My cart</p>"
-            //console.log(listeTick)
+            console.log(listeTick)
             if(listeTick.length > 0)  {
                 for(let i = 0; i < listeTick.length; i++) {
                     let newDate = new Date(listeTick[i].trip[0].date)
@@ -26,7 +26,7 @@ fetch('http://localhost:3000/tickets/cart')
                         <div id="listePrice"><strong>${listeTick[i].trip[0].price}€</strong></div>
                         <div id="listeChoix">
                             <button class="buttonGreen cartDelete" data-index="${i}">X</button>
-                            <input type="hidden" id="id${i}" value="${listeTick[i].trip[0]._id}">
+                            <input type="hidden" id="id${i}" value="${listeTick[i]._id}">
                         </div>
                     </div>`
                 }
@@ -59,7 +59,7 @@ function deletePanier() {
                 fetch('http://localhost:3000/tickets/cart/'+idCart, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
-                    // body: JSON.stringify(idBook)
+                    //body: JSON.stringify(idCart)
                 })
                 .then(response => response.json())
                 .then(
