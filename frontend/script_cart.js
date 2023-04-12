@@ -4,32 +4,8 @@
 fetch('http://localhost:3000/tickets/cart')
 .then(response => response.json())
 .then(
-    data => {
+    data => { // OK
         let listeData = data
-        /*********** A SUPP  ***************/ /*
-        listeData = { tick: [{
-                "_id": "64351c6787c4d8dbf2e85299",
-                "departure": "Paris",
-                "arrival": "Marseille",
-                "date": "2023-04-15T06:28:33.263Z",
-                "price": 200
-            },{
-                "_id": "64351c6787c4d8dbf2e85292",
-                "departure": "Paris",
-                "arrival": "Marseille",
-                "date": "2023-04-15T06:50:33.263Z",
-                "price": 100
-            },{
-                "_id": "64351c6787c4d8dbf2e85292",
-                "departure": "Paris",
-                "arrival": "Marseille",
-                "date": "2023-04-15T09:30:33.263Z",
-                "price": 50
-            } ],
-            result: true, total: 350
-        } */
-        console.log(listeData)
-        /************** */
         const panierVide =  `
         <p>No tickets in your cart.</p>
         <p>Why not plain a trip?</p>`
@@ -48,14 +24,16 @@ fetch('http://localhost:3000/tickets/cart')
                         <div id="listeHeure">${heure}:${minutes}</div>
                         <div id="listePrice"><strong>${listeTick[i].trip[0].price}€</strong></div>
                         <div id="listeChoix">
-                        <button class="buttonGreen cartDelete" data-index="${i}">X</button>
-                        <input type="hidden" value="${listeTick[i].trip[0]._id}">
+                            <button class="buttonGreen cartDelete" data-index="${i}">X</button>
+                            <input type="hidden" id="id${i}" value="${listeTick[i].trip[0]._id}">
                         </div>
                     </div>`
                 }
                 listeAffiche += `<div id="totalCart"><div>Total: ${listeData.total}€</div>
                 <div><button id="purchase" class="buttonGreen">Purchase</button></div></div>`
                 document.querySelector("#resultCart").innerHTML = listeAffiche
+                purchasePanier()
+                deletePanier()
             } else {
                 document.querySelector("#resultCart").innerHTML = panierVide
             }
@@ -66,34 +44,59 @@ fetch('http://localhost:3000/tickets/cart')
 )
 
 /* ******* SUPP Panier ****** */
+function deletePanier() {
 
-const tousLesBoutons = document.querySelectorAll('.cartDelete')
-for (let i = 0; i < tousLesBoutons.length; i++) {
-    // quand clic sur un bouton 
-    // récup les champs 
-    tousLesBoutons[i].addEventListener('click',
-        function () {
-            console.log("kkk")
-            const idCart = this.nextElementSibling.value
-            console.log(idCart)
+    const tousLesBoutons = document.querySelectorAll('.cartDelete')
+    for (let i = 0; i < tousLesBoutons.length; i++) {
+        // quand clic sur un bouton 
+        // récup les champs 
+        tousLesBoutons[i].addEventListener('click',
+            function () {
+                
+                const idCart = this.nextElementSibling.value
+                console.log(idCart)
+                fetch('http://localhost:3000/tickets/cart/'+idCart, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    // body: JSON.stringify(idBook)
+                })
+                .then(response => response.json())
+                .then(
+                    data => {
+                        if(data) {
+                            // delete affichage
+                            this.parentNode.parentNode.style.display = "none"
+                            console.log(data)
+                        } else {
+                            console.log("Delete impossible")
+                        }
+                    }
+                )
+        })
+    }
+}
+
+function purchasePanier() { // OK
+    /* ******* Valide Panier ****** */
+    document.querySelector('#purchase').addEventListener('click', function() {
+        const tousLesTrips = document.querySelectorAll('.listeSearch')
+        // console.log("Purchase : "+tousLesTrips.length)
+        for(let i =0; i < tousLesTrips.length; i++) {
+            let idCart = document.querySelector('id'+i)
+            // console.log(idCart)
+            // change le statut en acheté isPayed
             fetch('http://localhost:3000/tickets/cart/'+idCart, {
-                method: 'DELETE',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                // body: JSON.stringify(idBook)
             })
             .then(response => response.json())
             .then(
-                data => {
-                    if(data) {
-                        // delete affichage
-                        this.paentNode.style.display = none
-                    } else {}
-                }
+                data => { console.log(data.tick)  }
             )
+            if(i === tousLesTrips.length - 1) {
+                // redirect vers Bookings
+                window.location.assign("bookings.html")
+            } else {}
+        }
     })
 }
-
-/* ******* Valide Panier ****** */
-
-// redirect vers Bookings
-//window.location.assign("bookings.html")
