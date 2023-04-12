@@ -18,7 +18,7 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
         .then(
             data => {
                 let result = '' 
-                /*********** A SUPP  ***************/ /*
+                /*********** A SUPP  ***************/ 
                 data = [{
                     "_id": "64351c6787c4d8dbf2e85299",
                     "departure": "Paris",
@@ -37,30 +37,32 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
                     "arrival": "Marseille",
                     "date": "2023-04-15T09:30:33.263Z",
                     "price": 90
-                } ] */
+                } ] 
                 /*********** */
-                if(data) {
-                    for(let i = 0; i < data.length; i++) {
-                        let newDate = new Date(data[i].date)
-                        let heure = newDate.getHours()
-                        let minutes = newDate.getMinutes()
-                        result += `
-                        <div class="listeSearch">
-                            <div id="listeDepArriv">${data[i].departure} &rsaquo; ${data[i].arrival}</div>
-                            <div id="listeHeure">${heure}:${minutes}</div>
-                            <div id="listePrice"><strong>${data[i].price}€</strong></div>
-                            <div id="listeChoix">
-                                <button class="buttonGreen bookSearch" data-index="${i}">Book</button>
-                                <input type="hidden" value="${data[i]._id}">
-                            </div>
-                        </div>`
-                    }
+                if(data && data.length >0) {
+                    result += `<div id="blockSearch">`
+                        for(let i = 0; i < data.length; i++) {
+                            let newDate = new Date(data[i].date)
+                            let heure = newDate.getHours()
+                            let minutes = newDate.getMinutes()
+                            result += `
+                            <div class="listeSearch">
+                                <div id="listeDepArriv">${data[i].departure} &rsaquo; ${data[i].arrival}</div>
+                                <div id="listeHeure">${heure}:${minutes}</div>
+                                <div id="listePrice"><strong>${data[i].price}€</strong></div>
+                                <div id="listeChoix">
+                                    <button class="buttonGreen bookSearch" data-index="${i}">Book</button>
+                                    <input type="hidden" value="${data[i]._id}">
+                                </div>
+                            </div>`
+                        }
+                    result+=`</div>`
                 } else {
                     result = `
                     <p id="ligneverte"><img src="images/notfound.png" alt="Search" height="200"></p>
                     <p>No Trip found</p>`
                 }
-                document.querySelector("#resultSearch").innerHTML = `<div id="blockSearch">${result}</div>`
+                document.querySelector("#resultSearch").innerHTML = `${result}`
                 bookSearch()
             }
         )
