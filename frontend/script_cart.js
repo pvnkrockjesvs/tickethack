@@ -6,7 +6,7 @@ fetch('http://localhost:3000/tickets/cart')
 .then(
     data => {
         let listeData = data
-        /*********** A SUPP  ***************/
+        /*********** A SUPP  ***************/ /*
         listeData = { tick: [{
                 "_id": "64351c6787c4d8dbf2e85299",
                 "departure": "Paris",
@@ -27,7 +27,8 @@ fetch('http://localhost:3000/tickets/cart')
                 "price": 50
             } ],
             result: true, total: 350
-        } 
+        } */
+        console.log(listeData)
         /************** */
         const panierVide =  `
         <p>No tickets in your cart.</p>
@@ -35,20 +36,20 @@ fetch('http://localhost:3000/tickets/cart')
         if(listeData.result) {
             let listeTick = listeData.tick
             let listeAffiche = "<p>My cart</p>"
-            console.log(listeTick)
+            //console.log(listeTick)
             if(listeTick.length > 0)  {
                 for(let i = 0; i < listeTick.length; i++) {
-                    let newDate = new Date(listeTick[i].date)
+                    let newDate = new Date(listeTick[i].trip[0].date)
                     let heure = newDate.getHours()
                     let minutes = newDate.getMinutes()
                     listeAffiche += `
                     <div class="listeSearch">
-                        <div id="listeDepArriv">${listeTick[i].departure} &rsaquo; ${listeTick[i].arrival}</div>
+                        <div id="listeDepArriv">${listeTick[i].trip[0].departure} &rsaquo; ${listeTick[i].trip[0].arrival}</div>
                         <div id="listeHeure">${heure}:${minutes}</div>
-                        <div id="listePrice"><strong>${listeTick[i].price}€</strong></div>
+                        <div id="listePrice"><strong>${listeTick[i].trip[0].price}€</strong></div>
                         <div id="listeChoix">
-                        <button class="buttonGreen bookSearch" data-index="${i}">X</button>
-                        <input type="hidden" value="${listeTick[i]._id}">
+                        <button class="buttonGreen cartDelete" data-index="${i}">X</button>
+                        <input type="hidden" value="${listeTick[i].trip[0]._id}">
                         </div>
                     </div>`
                 }
@@ -56,23 +57,43 @@ fetch('http://localhost:3000/tickets/cart')
                 <div><button id="purchase" class="buttonGreen">Purchase</button></div></div>`
                 document.querySelector("#resultCart").innerHTML = listeAffiche
             } else {
-                document.querySelector("#resultCart").innerHTML = parnierVide
+                document.querySelector("#resultCart").innerHTML = panierVide
             }
         } else {
-            document.querySelector("#resultCart").innerHTML = parnierVide
+            document.querySelector("#resultCart").innerHTML = panierVide
         }
     }
 )
 
-/* ******* BOOKING = billets ACHETES ****** */
-/* if isPayed
-Result Booking
+/* ******* SUPP Panier ****** */
 
-            <p>My bookings</p>
-            <div id="listBooking"></div>
-            <p class="colorvert">Enjoy your trajets with Tickethack!</p>
-*/
+const tousLesBoutons = document.querySelectorAll('.cartDelete')
+for (let i = 0; i < tousLesBoutons.length; i++) {
+    // quand clic sur un bouton 
+    // récup les champs 
+    tousLesBoutons[i].addEventListener('click',
+        function () {
+            console.log("kkk")
+            const idCart = this.nextElementSibling.value
+            console.log(idCart)
+            fetch('http://localhost:3000/tickets/cart/'+idCart, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                // body: JSON.stringify(idBook)
+            })
+            .then(response => response.json())
+            .then(
+                data => {
+                    if(data) {
+                        // delete affichage
+                        this.paentNode.style.display = none
+                    } else {}
+                }
+            )
+    })
+}
 
+/* ******* Valide Panier ****** */
 
-// supp du panier
-
+// redirect vers Bookings
+//window.location.assign("bookings.html")

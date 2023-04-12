@@ -18,7 +18,7 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
         .then(
             data => {
                 let result = '' 
-                /*********** A SUPP  ***************/ 
+                /*********** A SUPP  ***************/ /*
                 data = [{
                     "_id": "64351c6787c4d8dbf2e85299",
                     "departure": "Paris",
@@ -37,7 +37,7 @@ document.querySelector("#buttonSearch").addEventListener('click', function(){
                     "arrival": "Marseille",
                     "date": "2023-04-15T09:30:33.263Z",
                     "price": 90
-                } ] 
+                } ] */
                 /*********** */
                 if(data && data.length >0) {
                     result += `<div id="blockSearch">`
