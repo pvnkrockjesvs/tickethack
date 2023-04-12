@@ -70,14 +70,7 @@ function deletePanier() {
                 })
                 .then(response => response.json())
                 .then(
-                    data => { /*
-                        if(data) {
-                            // delete affichage
-                            this.parentNode.parentNode.style.display = "none"
-                            console.log(data)
-                        } else {
-                            console.log("Delete impossible")
-                        } */
+                    data => { 
                         // reaffiche panier pour gérer si vide
                         affichePanier()
                     }
