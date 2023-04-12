@@ -86,17 +86,20 @@ function purchasePanier() { // OK
             let idCart = document.querySelector('id'+i)
             // console.log(idCart)
             // change le statut en acheté isPayed
-            fetch('http://localhost:3000/tickets/cart/'+idCart, {
+            fetch('http://localhost:3000/tickets/cart', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
             })
             .then(response => response.json())
             .then(
-                data => { console.log(data.tick)  }
+                data => { 
+                    console.log(data.tick)
+                    window.location.assign("bookings.html")
+                  }
             )
             if(i === tousLesTrips.length - 1) {
                 // redirect vers Bookings
-                window.location.assign("bookings.html")
+                
             } else {}
         }
     })
