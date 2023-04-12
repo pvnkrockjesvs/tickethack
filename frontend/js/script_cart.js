@@ -1,48 +1,55 @@
+function msgPanierVide() {
+    return  `
+    <p>No tickets in your cart.</p>
+    <p>Why not plain a trip?</p>`
+}
 
 /* *********** AFFICHER PANIER ************** */
 
-fetch('http://localhost:3000/tickets/cart')
-.then(response => response.json())
-.then(
-    data => { // OK
-        let listeData = data
-        const panierVide =  `
-        <p>No tickets in your cart.</p>
-        <p>Why not plain a trip?</p>`
-        if(listeData.result) {
-            let listeTick = listeData.tick
-            let listeAffiche = "<p>My cart</p>"
-            console.log(listeTick)
-            if(listeTick.length > 0)  {
-                for(let i = 0; i < listeTick.length; i++) {
-                    let newDate = new Date(listeTick[i].trip[0].date)
-                    let heure = dateAvantDix(newDate.getHours())
-                    let minutes = dateAvantDix(newDate.getMinutes())
-                    
-                    listeAffiche += `
-                    <div class="listeSearch">
-                        <div id="listeDepArriv">${listeTick[i].trip[0].departure} &rsaquo; ${listeTick[i].trip[0].arrival}</div>
-                        <div id="listeHeure">${heure}:${minutes}</div>
-                        <div id="listePrice"><strong>${listeTick[i].trip[0].price}€</strong></div>
-                        <div id="listeChoix">
-                            <button class="buttonGreen cartDelete" data-index="${i}">X</button>
-                            <input type="hidden" id="id${i}" value="${listeTick[i]._id}">
-                        </div>
-                    </div>`
+function affichePanier() {
+    fetch('http://localhost:3000/tickets/cart')
+    .then(response => response.json())
+    .then(
+        data => { // OK
+            let panierVide = msgPanierVide()
+            let listeData = data
+            if(listeData.result) {
+                let listeTick = listeData.tick
+                let listeAffiche = "<p>My cart</p>"
+                console.log(listeTick)
+                if(listeTick.length > 0)  {
+                    for(let i = 0; i < listeTick.length; i++) {
+                        let newDate = new Date(listeTick[i].trip[0].date)
+                        let heure = dateAvantDix(newDate.getHours())
+                        let minutes = dateAvantDix(newDate.getMinutes())
+                        
+                        listeAffiche += `
+                        <div class="listeSearch">
+                            <div id="listeDepArriv">${listeTick[i].trip[0].departure} &rsaquo; ${listeTick[i].trip[0].arrival}</div>
+                            <div id="listeHeure">${heure}:${minutes}</div>
+                            <div id="listePrice"><strong>${listeTick[i].trip[0].price}€</strong></div>
+                            <div id="listeChoix">
+                                <button class="buttonGreen cartDelete" data-index="${i}">X</button>
+                                <input type="hidden" id="id${i}" value="${listeTick[i]._id}">
+                            </div>
+                        </div>`
+                    }
+                    listeAffiche += `<div id="totalCart"><div>Total: ${listeData.total}€</div>
+                    <div><button id="purchase" class="buttonGreen">Purchase</button></div></div>`
+                    document.querySelector("#resultCart").innerHTML = listeAffiche
+                    purchasePanier()
+                    deletePanier()
+                } else {
+                    document.querySelector("#resultCart").innerHTML = panierVide
                 }
-                listeAffiche += `<div id="totalCart"><div>Total: ${listeData.total}€</div>
-                <div><button id="purchase" class="buttonGreen">Purchase</button></div></div>`
-                document.querySelector("#resultCart").innerHTML = listeAffiche
-                purchasePanier()
-                deletePanier()
             } else {
                 document.querySelector("#resultCart").innerHTML = panierVide
             }
-        } else {
-            document.querySelector("#resultCart").innerHTML = panierVide
         }
-    }
-)
+    )
+
+}
+affichePanier()
 
 /* ******* SUPP Panier ****** */
 function deletePanier() {
@@ -63,21 +70,23 @@ function deletePanier() {
                 })
                 .then(response => response.json())
                 .then(
-                    data => {
+                    data => { /*
                         if(data) {
                             // delete affichage
                             this.parentNode.parentNode.style.display = "none"
                             console.log(data)
                         } else {
                             console.log("Delete impossible")
-                        }
+                        } */
+                        // reaffiche panier pour gérer si vide
+                        affichePanier()
                     }
                 )
         })
     }
 }
 
-function purchasePanier() { // 
+function purchasePanier() { // ok
     /* ******* Valide Panier ****** */
     document.querySelector('#purchase').addEventListener('click', function() {
         const tousLesTrips = document.querySelectorAll('.listeSearch')
